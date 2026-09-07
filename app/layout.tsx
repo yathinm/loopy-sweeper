@@ -15,6 +15,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'Loopy Sweeper',
   description: 'A sweet and playful classic Minesweeper game.',
+  icons: {
+    icon: '/assets/loopy/loopy-surprised.webp',
+    apple: '/assets/loopy/loopy-surprised.webp',
+  },
 };
 
 export default function RootLayout({
