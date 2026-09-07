@@ -65,6 +65,7 @@ export function Board({
                   explodedCell?.row === cell.row &&
                   explodedCell.column === cell.column
                 }
+                isIncorrectFlag={locked && cell.isFlagged && !cell.hasMine}
                 tabIndex={
                   focused.row === cell.row && focused.column === cell.column
                     ? 0

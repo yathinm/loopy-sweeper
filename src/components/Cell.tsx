@@ -1,6 +1,6 @@
 'use client';
 
-import { Bomb, Flag } from 'lucide-react';
+import { Bomb, Flag, X } from 'lucide-react';
 import type { KeyboardEvent, PointerEvent } from 'react';
 import { useLongPress } from '../hooks/useLongPress';
 import type { Cell as CellData, Position } from '../game/types';
@@ -8,6 +8,7 @@ import type { Cell as CellData, Position } from '../game/types';
 interface CellProps {
   cell: CellData;
   isExploded: boolean;
+  isIncorrectFlag: boolean;
   tabIndex: number;
   onReveal: (position: Position) => void;
   onFlag: (position: Position) => void;
@@ -15,11 +16,14 @@ interface CellProps {
   onNavigate: (position: Position, key: string) => void;
 }
 
-function getCellLabel(cell: CellData, isExploded: boolean) {
+function getCellLabel(
+  cell: CellData,
+  isExploded: boolean,
+  isIncorrectFlag: boolean,
+) {
   const position = `Row ${cell.row + 1}, column ${cell.column + 1}`;
   if (isExploded) return `${position}, exploded mine`;
-  if (cell.isFlagged && cell.isRevealed && !cell.hasMine)
-    return `${position}, incorrect flag`;
+  if (isIncorrectFlag) return `${position}, incorrect flag`;
   if (cell.isFlagged) return `${position}, flagged`;
   if (!cell.isRevealed) return `${position}, covered`;
   if (cell.hasMine) return `${position}, mine`;
@@ -30,6 +34,7 @@ function getCellLabel(cell: CellData, isExploded: boolean) {
 export function Cell({
   cell,
   isExploded,
+  isIncorrectFlag,
   tabIndex,
   onReveal,
   onFlag,
@@ -75,13 +80,15 @@ export function Cell({
 
   const state = isExploded
     ? 'exploded'
-    : cell.isRevealed
-      ? cell.hasMine
-        ? 'mine'
-        : 'revealed'
-      : cell.isFlagged
-        ? 'flagged'
-        : 'covered';
+    : isIncorrectFlag
+      ? 'incorrect'
+      : cell.isRevealed
+        ? cell.hasMine
+          ? 'mine'
+          : 'revealed'
+        : cell.isFlagged
+          ? 'flagged'
+          : 'covered';
 
   return (
     <button
@@ -91,7 +98,7 @@ export function Cell({
       data-number={
         cell.isRevealed && !cell.hasMine ? cell.adjacentMines : undefined
       }
-      aria-label={getCellLabel(cell, isExploded)}
+      aria-label={getCellLabel(cell, isExploded, isIncorrectFlag)}
       aria-pressed={cell.isFlagged}
       tabIndex={tabIndex}
       onFocus={() => onFocus(position)}
@@ -106,11 +113,16 @@ export function Cell({
       onKeyDown={handleKeyDown}
     >
       {cell.isFlagged && !cell.isRevealed ? (
-        <Flag
-          className="cell-icon flag-icon"
-          aria-hidden="true"
-          fill="currentColor"
-        />
+        <>
+          <Flag
+            className="cell-icon flag-icon"
+            aria-hidden="true"
+            fill="currentColor"
+          />
+          {isIncorrectFlag ? (
+            <X className="incorrect-icon" aria-hidden="true" />
+          ) : null}
+        </>
       ) : null}
       {cell.isRevealed && cell.hasMine ? (
         <Bomb

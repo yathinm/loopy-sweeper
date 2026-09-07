@@ -1,6 +1,7 @@
 'use client';
 
 import { Flag, Timer } from 'lucide-react';
+import Image from 'next/image';
 import { DIFFICULTIES } from '../game/difficulties';
 import type { Difficulty, GameStatus } from '../game/types';
 
@@ -24,7 +25,10 @@ export function GameHeader({
   onDifficultyChange,
   onRestart,
 }: GameHeaderProps) {
-  const face = status === 'lost' ? '😮' : status === 'won' ? '🥰' : '😊';
+  const face =
+    status === 'lost'
+      ? '/assets/loopy/loopy-surprised.webp'
+      : '/assets/loopy/loopy-neutral.png';
 
   return (
     <header className="game-header">
@@ -62,7 +66,13 @@ export function GameHeader({
           onClick={onRestart}
           aria-label="Restart game"
         >
-          <span aria-hidden="true">{face}</span>
+          <Image
+            className="restart-face"
+            src={face}
+            alt=""
+            width={400}
+            height={400}
+          />
         </button>
         <div
           className="counter"

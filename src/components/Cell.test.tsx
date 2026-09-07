@@ -19,6 +19,7 @@ function setup(cell = coveredCell) {
     <Cell
       cell={cell}
       isExploded={false}
+      isIncorrectFlag={false}
       tabIndex={0}
       onReveal={onReveal}
       onFlag={onFlag}
@@ -55,6 +56,7 @@ describe('Cell', () => {
       <Cell
         cell={coveredCell}
         isExploded={false}
+        isIncorrectFlag={false}
         tabIndex={0}
         onReveal={onReveal}
         onFlag={onFlag}

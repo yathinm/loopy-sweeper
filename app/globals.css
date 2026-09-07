@@ -231,6 +231,7 @@ h1 {
   letter-spacing: 0.08em;
 }
 .restart-button {
+  position: relative;
   display: grid;
   width: 3.25rem;
   height: 3.25rem;
@@ -244,6 +245,15 @@ h1 {
   cursor: pointer;
   font-size: 1.45rem;
   transition: transform 0.16s ease;
+  overflow: hidden;
+}
+.restart-face {
+  position: absolute;
+  width: 4.4rem;
+  height: 4.4rem;
+  max-width: none;
+  object-fit: contain;
+  transform: translateY(0.65rem);
 }
 .restart-button:hover {
   transform: translateY(-2px) rotate(-4deg);
@@ -330,6 +340,18 @@ h1 {
 }
 .mine-cell[data-state='flagged'] {
   background: linear-gradient(145deg, #ffd2dc, #f49ab4);
+}
+.mine-cell[data-state='incorrect'] {
+  position: relative;
+  background: #f2d8d8;
+  box-shadow: inset 0 0 0 2px #ce5869;
+}
+.incorrect-icon {
+  position: absolute;
+  width: 82%;
+  height: 82%;
+  color: #9f2339;
+  stroke-width: 3;
 }
 .mine-cell[data-state='mine'] {
   color: #715261;
