@@ -25,6 +25,7 @@ export function useMinesweeper() {
   const [gameId, setGameId] = useState(0);
   const [explodedCell, setExplodedCell] = useState<Position | null>(null);
   const [bestTimes, setBestTimes] = useState<BestTimes>({});
+  const [isNewBest, setIsNewBest] = useState(false);
   const [hydrated, setHydrated] = useState(false);
   const elapsedSeconds = useGameTimer(status, gameId);
   const config = DIFFICULTIES[difficulty];
@@ -52,6 +53,7 @@ export function useMinesweeper() {
       setBoard(createEmptyBoard(nextConfig.rows, nextConfig.columns));
       setStatus('ready');
       setExplodedCell(null);
+      setIsNewBest(false);
       setGameId((id) => id + 1);
       savePreferences({ difficulty: nextDifficulty });
     },
@@ -97,6 +99,7 @@ export function useMinesweeper() {
           const nextBest = { ...bestTimes, [difficulty]: elapsedSeconds };
           setBestTimes(nextBest);
           saveBestTimes(nextBest);
+          setIsNewBest(true);
         }
       }
       setStatus(nextStatus);
@@ -130,6 +133,7 @@ export function useMinesweeper() {
     remainingMines: config.mines - flagCount,
     explodedCell,
     bestTime: bestTimes[difficulty],
+    isNewBest,
     hydrated,
     reveal,
     toggleFlag,

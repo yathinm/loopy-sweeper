@@ -35,7 +35,9 @@ export function Board({
     if (key === 'End') column = columns - 1;
     setFocused({ row, column });
     document
-      .querySelector<HTMLButtonElement>(`[data-cell="${row}-${column}"]`)
+      .querySelector<HTMLButtonElement>(
+        `[data-cell="${row}-${column}"] .mine-cell`,
+      )
       ?.focus();
   };
 

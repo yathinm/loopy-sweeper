@@ -10,6 +10,7 @@ interface ResultModalProps {
   status: GameStatus;
   elapsedSeconds: number;
   bestTime?: number;
+  isNewBest: boolean;
   onPlayAgain: () => void;
 }
 
@@ -17,6 +18,7 @@ export function ResultModal({
   status,
   elapsedSeconds,
   bestTime,
+  isNewBest,
   onPlayAgain,
 }: ResultModalProps) {
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -61,7 +63,7 @@ export function ResultModal({
             ? `Finished in ${formatTime(elapsedSeconds)} seconds.`
             : 'That was a tricky one. Ready for another try?'}
         </p>
-        {won && bestTime === elapsedSeconds ? (
+        {won && isNewBest && bestTime === elapsedSeconds ? (
           <p className="best-time">
             <Trophy aria-hidden="true" /> New best time
           </p>

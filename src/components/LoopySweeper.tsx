@@ -5,9 +5,11 @@ import { Board } from './Board';
 import { GameHeader } from './GameHeader';
 import { ResultModal } from './ResultModal';
 import { useMinesweeper } from '../hooks/useMinesweeper';
+import { useGameTool } from '../hooks/useGameTool';
 
 export function LoopySweeper() {
   const game = useMinesweeper();
+  useGameTool(game.changeDifficulty);
 
   return (
     <main className="game-page">
@@ -86,6 +88,7 @@ export function LoopySweeper() {
         status={game.status}
         elapsedSeconds={game.elapsedSeconds}
         bestTime={game.bestTime}
+        isNewBest={game.isNewBest}
         onPlayAgain={() => game.restart()}
       />
     </main>
