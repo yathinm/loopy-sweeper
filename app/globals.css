@@ -122,19 +122,10 @@ button:focus-visible {
 }
 .title-row {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
   min-height: 7rem;
-  padding-right: 5.5rem;
   text-align: center;
-}
-.eyebrow {
-  margin: 0 0 0.2rem;
-  color: var(--pink-dark);
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
 }
 h1 {
   margin: 0;
@@ -144,15 +135,6 @@ h1 {
   letter-spacing: -0.055em;
   line-height: 0.95;
   text-shadow: 0 3px 0 rgba(255, 255, 255, 0.75);
-}
-.loopy-mascot {
-  width: clamp(5.5rem, 11vw, 8.5rem);
-  height: clamp(5.5rem, 11vw, 8.5rem);
-  margin: 0 -7rem -1.35rem 1rem;
-  object-fit: contain;
-  filter: drop-shadow(0 7px 7px rgba(95, 45, 58, 0.18));
-  transform: rotate(4deg);
-  z-index: 2;
 }
 .game-panel {
   width: fit-content;
@@ -166,6 +148,15 @@ h1 {
     0 1rem 2.8rem var(--shadow),
     inset 0 0 0 2px #efbdca;
   backdrop-filter: blur(8px);
+}
+.game-panel[data-difficulty='expert'] {
+  width: fit-content;
+  max-width: calc(100vw - 1rem);
+  --cell-size: clamp(
+    1.25rem,
+    min(calc((100vw - 13rem) / 30), calc((100svh - 22rem) / 16)),
+    2.25rem
+  );
 }
 .game-header {
   display: grid;
@@ -271,13 +262,9 @@ h1 {
   color: #855b69;
   font-size: 0.8rem;
 }
-.desktop-instruction {
-  margin-left: 0.55rem;
-  padding-left: 0.8rem;
-  border-left: 1px solid #e5bbc7;
-}
 .board-scroll {
-  max-width: calc(100vw - 3.6rem);
+  max-width: 100%;
+  margin-inline: auto;
   overflow: auto;
   padding: 0.25rem 0.25rem 0.6rem;
   overscroll-behavior: contain;
@@ -421,7 +408,7 @@ h1 {
 }
 .result-modal {
   width: min(100%, 24rem);
-  padding: 0 2rem 2rem;
+  padding: 1.5rem 2rem 2rem;
   border: 4px solid #fff;
   border-radius: 2rem;
   background: var(--cream);
@@ -429,8 +416,10 @@ h1 {
   text-align: center;
 }
 .result-art {
-  height: 9rem;
-  margin-top: -4rem;
+  display: grid;
+  height: 11rem;
+  margin-bottom: 1rem;
+  place-items: center;
 }
 .result-art img {
   width: 11rem;
@@ -538,15 +527,18 @@ h1 {
   }
   .title-row {
     min-height: 5.6rem;
-    padding-right: 3.5rem;
-  }
-  .loopy-mascot {
-    margin-right: -4.4rem;
-    margin-left: 0.35rem;
   }
   .game-panel {
     padding: 0.75rem;
     border-radius: 1.5rem;
+  }
+  .game-panel[data-difficulty='expert'] {
+    max-width: calc(100vw - 1.1rem);
+    --cell-size: clamp(
+      1rem,
+      min(calc((100vw - 6rem) / 30), calc((100svh - 19rem) / 16)),
+      2rem
+    );
   }
   .difficulty-button {
     padding-inline: 0.62rem;
@@ -561,9 +553,6 @@ h1 {
   }
   .instructions {
     font-size: 0.74rem;
-  }
-  .desktop-instruction {
-    display: none;
   }
   .board-scroll {
     max-width: calc(100vw - 2.4rem);

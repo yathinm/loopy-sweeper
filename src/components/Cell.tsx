@@ -2,7 +2,6 @@
 
 import { Bomb, Flag, X } from 'lucide-react';
 import type { KeyboardEvent, PointerEvent } from 'react';
-import { useLongPress } from '../hooks/useLongPress';
 import type { Cell as CellData, Position } from '../game/types';
 
 interface CellProps {
@@ -42,14 +41,9 @@ export function Cell({
   onNavigate,
 }: CellProps) {
   const position = { row: cell.row, column: cell.column };
-  const longPress = useLongPress({
-    onPress: () => onReveal(position),
-    onLongPress: () => onFlag(position),
-  });
 
   const handlePointerUp = (event: PointerEvent<HTMLButtonElement>) => {
-    if (event.pointerType === 'mouse' && event.button === 0) onReveal(position);
-    longPress.onPointerUp(event);
+    if (event.button === 0) onReveal(position);
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
@@ -106,10 +100,7 @@ export function Cell({
         event.preventDefault();
         onFlag(position);
       }}
-      onPointerDown={longPress.onPointerDown}
-      onPointerMove={longPress.onPointerMove}
       onPointerUp={handlePointerUp}
-      onPointerCancel={longPress.onPointerCancel}
       onKeyDown={handleKeyDown}
     >
       {cell.isFlagged && !cell.isRevealed ? (

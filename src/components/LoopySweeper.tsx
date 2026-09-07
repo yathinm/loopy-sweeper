@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { Board } from './Board';
 import { GameHeader } from './GameHeader';
 import { ResultModal } from './ResultModal';
@@ -19,18 +18,7 @@ export function LoopySweeper() {
 
       <section className="game-shell" aria-labelledby="game-title">
         <div className="title-row">
-          <div>
-            <p className="eyebrow">Porong Porong Forest</p>
-            <h1 id="game-title">Loopy Sweeper</h1>
-          </div>
-          <Image
-            className="loopy-mascot"
-            src="/assets/loopy/loopy-neutral.png"
-            alt="Loopy waves hello"
-            width={400}
-            height={400}
-            priority
-          />
+          <h1 id="game-title">Loopy Sweeper</h1>
         </div>
 
         <div className="game-panel" data-difficulty={game.difficulty}>
@@ -49,9 +37,8 @@ export function LoopySweeper() {
             </span>
             <span aria-hidden="true">•</span>
             <span>
-              <strong>Hold</strong> to flag
+              <strong>Right-click</strong> to flag
             </span>
-            <span className="desktop-instruction">Right-click also flags</span>
           </div>
 
           {game.hydrated ? (

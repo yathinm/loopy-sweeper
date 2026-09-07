@@ -1,10 +1,8 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { Trophy } from 'lucide-react';
 import Image from 'next/image';
 import type { GameStatus } from '../game/types';
-import { formatTime } from './GameHeader';
 
 interface ResultModalProps {
   status: GameStatus;
@@ -16,9 +14,6 @@ interface ResultModalProps {
 
 export function ResultModal({
   status,
-  elapsedSeconds,
-  bestTime,
-  isNewBest,
   onPlayAgain,
 }: ResultModalProps) {
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -37,8 +32,7 @@ export function ResultModal({
         className="result-modal"
         role="alertdialog"
         aria-modal="true"
-        aria-labelledby="result-title"
-        aria-describedby="result-description"
+        aria-label={won ? 'Game won' : 'Game lost'}
       >
         <div className={`result-art ${won ? 'happy' : 'surprised'}`}>
           <Image
@@ -52,22 +46,6 @@ export function ResultModal({
             height={512}
           />
         </div>
-        <p className="result-kicker">
-          {won ? 'Sweet victory!' : 'Oh, crumbs!'}
-        </p>
-        <h2 id="result-title">
-          {won ? 'You cleared the garden!' : 'A mine found you'}
-        </h2>
-        <p id="result-description">
-          {won
-            ? `Finished in ${formatTime(elapsedSeconds)} seconds.`
-            : 'That was a tricky one. Ready for another try?'}
-        </p>
-        {won && isNewBest && bestTime === elapsedSeconds ? (
-          <p className="best-time">
-            <Trophy aria-hidden="true" /> New best time
-          </p>
-        ) : null}
         <button
           ref={buttonRef}
           type="button"
